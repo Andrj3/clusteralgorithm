@@ -43,7 +43,9 @@ from sklearn.metrics import silhouette_samples, silhouette_score
 from sklearn.model_selection import train_test_split, cross_validate
 from sklearn.neural_network import MLPRegressor
 
+import os
 import io
+
 import pickle
 import datetime
 from datetime import datetime
@@ -70,9 +72,10 @@ with dataset:
     st.text('if you want to analyse your own data, pls upload a CSV-File')
     df_uploaded = st.file_uploader('Upload CSV-File',type=['csv'])
 
-    datapath = Path('../01-Data/')
-    df = pd.read_csv(datapath/'60-Mall_Customers.csv', sep=',') # get the dataframe
-    df_origin = pd.read_csv(datapath/'60-Mall_Customers.csv', sep=',') #make a copy of the original dataframe
+
+    datapath = '01-Data'
+    df = pd.read_csv(os.path.join(datapath,'60-Mall_Customers.csv'), sep=',') # get the dataframe
+
     csv_separator = st.text_input ('Please enter separator for CSV.File')
 
     if df_uploaded is not None: df = pd.read_csv(df_uploaded, sep= csv_separator)
