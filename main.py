@@ -135,7 +135,7 @@ with cleaning:
 ### return the dataset as a BackUp ###
 
     fileNameCleaned = (prefix +'-1-cleaned.xlsx') #determine the fileName
-    df.to_excel(datapath/fileNameCleaned, index = False) #export the file into Excel-Sheet
+    df.to_excel(os.path.join(datapath,fileNameCleaned), index = False) #export the file into Excel-Sheet
     #st.text('we cleaned the dataset and return it with the name: ' + '"' + fileNameCleaned +'"')
     df_cleaned = df.copy(deep=True)
 
@@ -195,10 +195,9 @@ with clustering:
 
 #### 3.4 - return clustered dataset ####  
     st.subheader('3.4 - return clustered dataset')
-    datapath = Path('../powdiencealgorithm/01-Data/') #determine the datapath
     fileNameClustered = (prefix +'-2-clustered.xlsx') #determine the fileName
 
-    df_clustered.to_excel(datapath/fileNameClustered, index = False) #export the file into Excel-Sheet
+    df_clustered.to_excel(os.path.join(datapath,fileNameClustered), index = False) #export the file into Excel-Sheet
     clusteringAttributesLst
     st.write(df_clustered.head())
     dropLst = df_clustered.columns.tolist()
@@ -213,9 +212,8 @@ with clustering:
     df_clusteronly.drop(dropLst, axis= 1, inplace=True) #We now drop the features from the droplist and again show summary
     df_clusteronly.head()
 
-    datapath = Path('../powdiencealgorithm/01-Data/') #determine the datapath
     fileNameClusterOnly = (prefix +'-3-clusteronly.xlsx') #determine the fileName
-    df_clusteronly.to_excel(datapath/fileNameClusterOnly, index = False) #export the file into Excel-Sheet
+    df_clusteronly.to_excel(os.path.join(datapath,fileNameClusterOnly), index = False) #export the file into Excel-Sheet
 
 #### 3.6 - create final dataframe ####   
     st.subheader('3.6 - create final dataframe')
