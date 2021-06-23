@@ -67,7 +67,7 @@ with dataset:
     st.text('if you want to analyse your own data, pls upload a CSV-File')
     df_uploaded = st.file_uploader('Upload CSV-File',type=['csv'])
 
-    datapath = Path('../powdiencealgorithm/01-Data/')
+    datapath = Path('../01-Data/')
     df = pd.read_csv(datapath/'60-Mall_Customers.csv', sep=',') # get the dataframe
     df_origin = pd.read_csv(datapath/'60-Mall_Customers.csv', sep=',') #make a copy of the original dataframe
     csv_separator = st.text_input ('Please enter separator for CSV.File')
