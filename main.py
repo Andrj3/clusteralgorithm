@@ -30,17 +30,15 @@ import numpy as np
 
 install('matplotlib')
 import matplotlib as mpl
-
+import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 
 from pandas.api.types import is_categorical
 from pathlib import Path
 
-
+install('seaborn')
 import seaborn as sns; sns.set(style='whitegrid')
 from scipy.stats import norm
-
-import matplotlib.image as mpimg
-import matplotlib.pyplot as plt
 
 install('sklearn')
 from sklearn.cluster import KMeans
