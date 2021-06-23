@@ -21,14 +21,10 @@ prefix
 import subprocess
 import sys
 
-def install(package):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
-
 import streamlit as st
 import pandas as pd
 import numpy as np
 
-install('matplotlib')
 import matplotlib as mpl
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
@@ -36,11 +32,9 @@ import matplotlib.pyplot as plt
 from pandas.api.types import is_categorical
 from pathlib import Path
 
-install('seaborn')
 import seaborn as sns; sns.set(style='whitegrid')
 from scipy.stats import norm
 
-install('sklearn')
 from sklearn.cluster import KMeans
 from sklearn.datasets import make_blobs
 from sklearn.ensemble import RandomForestRegressor
