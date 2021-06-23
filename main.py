@@ -12,7 +12,7 @@
 ##### Project SetUp #####
 
 projectName = '60-MallCustomers'
-version = 'v20' #change from time to time
+version = 'v21' #change from time to time
 prefix = (projectName + '-' + version)
 prefix
 
@@ -135,7 +135,7 @@ with cleaning:
 ### return the dataset as a BackUp ###
 
     fileNameCleaned = (prefix +'-1-cleaned.xlsx') #determine the fileName
-    df.to_excel(os.path.join(datapath,fileNameCleaned), index = False) #export the file into Excel-Sheet
+    #df.to_excel(os.path.join(datapath,fileNameCleaned), index = False) #export the file into Excel-Sheet
     #st.text('we cleaned the dataset and return it with the name: ' + '"' + fileNameCleaned +'"')
     df_cleaned = df.copy(deep=True)
 
