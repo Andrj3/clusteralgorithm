@@ -1,5 +1,5 @@
-py -m pip install streamlit
-py -m pip install matplotlib
-py -m pip install pandas
-py -m pip install seaborn
-py -m pip install sklearn
+pip install streamlit
+pip install matplotlib
+pip install pandas
+pip install seaborn
+pip install sklearn
