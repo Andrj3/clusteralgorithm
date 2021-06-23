@@ -17,14 +17,24 @@ prefix = (projectName + '-' + version)
 prefix
 
 ##### Imports #####
-import streamlit as st
 
+import subprocess
+import sys
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+import streamlit as st
 import pandas as pd
 import numpy as np
+
+install('matplotlib')
 import matplotlib as mpl
+
 
 from pandas.api.types import is_categorical
 from pathlib import Path
+
 
 import seaborn as sns; sns.set(style='whitegrid')
 from scipy.stats import norm
@@ -32,6 +42,7 @@ from scipy.stats import norm
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 
+install('sklearn')
 from sklearn.cluster import KMeans
 from sklearn.datasets import make_blobs
 from sklearn.ensemble import RandomForestRegressor
@@ -128,7 +139,6 @@ with cleaning:
 
 ### return the dataset as a BackUp ###
 
-    datapath = Path('../powdiencealgorithm/01-Data/') #determine the datapath
     fileNameCleaned = (prefix +'-1-cleaned.xlsx') #determine the fileName
     df.to_excel(datapath/fileNameCleaned, index = False) #export the file into Excel-Sheet
     #st.text('we cleaned the dataset and return it with the name: ' + '"' + fileNameCleaned +'"')
