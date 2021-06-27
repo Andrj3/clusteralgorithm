@@ -101,6 +101,8 @@ with cleaning:
     #st.text('first we rename the features, so it is more confortable to proceed with easier names')
     if ownData == False:
         df.rename(columns={
+            'CustomerID' : 'ID',
+            #'Age' : 'Age'
             'Genre' : 'Gender',
             'Annual Income (k$)' : 'Income [k$]',
             'Spending Score (1-100)' : 'SpendingScore'
