@@ -171,7 +171,6 @@ with clustering:
     st.subheader('3.1 - suggestion for clustering: silhouetteScore')
     st.text('we analyse the dataset and reccomend a number of Clusters:')
 
-
     maxNumberOfClusters = 20 #this are just the numbers to consider from 1 to x, where x is the numberOfClusters
     silcoeff_col, elbow_col = st.beta_columns(2)
 
@@ -194,13 +193,14 @@ with clustering:
 
     recommendedNumberOfClustersIndex = silhouetteScore_df.idxmax(axis= 0, skipna=True)[1]
     recommendedNumberOfClusters = silhouetteScore_df.numberOfClusters[recommendedNumberOfClustersIndex]
-  
-    #fig1 = sns.lineplot(
-    #    data = silhouetteScore_df,
-    #    x = 'numberOfClusters',
-    #    y = 'SilhouetteScore'
-    #    )
-    #silcoeff_col.pyplot(fig1)
+
+    fig, ax = plt.subplots()
+    fig = sns.lineplot(
+        data = silhouetteScore_df,
+        x = 'numberOfClusters',
+        y = 'SilhouetteScore'
+        )
+    silcoeff_col.pyplot(fig)
 
 ### 3.2.2 - elbow-Method ### 
     k_rng = range(1,maxNumberOfClusters)
@@ -210,10 +210,10 @@ with clustering:
         km.fit(df_normalized[clusteringAttributesLst])
         sse_scaler.append(km.inertia_)
 
-    #fig2 = sns.lineplot(
-    #    data = sse_scaler
-    #    )
-    #elbow_col.pyplot(fig2)
+    fig = sns.lineplot(
+        data = sse_scaler
+        )
+    elbow_col.pyplot(fig)
 
 ### 3.2.2 - def reccomendation ### 
     chosenNumberOfClusters = st.slider('How many do you whish?', min_value=2, max_value=20, value= int(recommendedNumberOfClusters), step= 1)
@@ -221,8 +221,8 @@ with clustering:
     numberOfClusters = chosenNumberOfClusters
 
 #### 3.3 - k-means clustering ####   
-    st.subheader('3.3 - k-means clustering')
-    st.text('The dataset will now be clustered')
+    #st.subheader('3.3 - k-means clustering')
+    #st.text('The dataset will now be clustered')
 
     kmeans = KMeans(n_clusters=numberOfClusters).fit(df_normalized[clusteringAttributesLst])
     #st.write(kmeans.cluster_centers_)
@@ -238,7 +238,7 @@ with clustering:
 
     #df_clustered.to_excel(os.path.join(datapath,fileNameClustered), index = False) #export the file into Excel-Sheet
     #clusteringAttributesLst
-    st.write(df.head())
+    #st.write(df.head())
 
 #### 3.5 - create datafram with only cluster attribute ####   
     #st.subheader('3.5 - create clusteronly dataframe')
