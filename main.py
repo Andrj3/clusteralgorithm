@@ -194,9 +194,9 @@ with clustering:
     recommendedNumberOfClustersIndex = silhouetteScore_df.idxmax(axis= 0, skipna=True)[1]
     recommendedNumberOfClusters = silhouetteScore_df.numberOfClusters[recommendedNumberOfClustersIndex]
 
-    fig, ax = plt.subplots(1,2)
+    fig, ax = plt.subplots()
 
-    fig = sns.lineplot(
+    ax = sns.lineplot(
         data = silhouetteScore_df,
         x = 'numberOfClusters',
         y = 'SilhouetteScore',
@@ -207,12 +207,13 @@ with clustering:
 ### 3.2.2 - elbow-Method ### 
     k_rng = range(1,maxNumberOfClusters)
     sse_scaler  = []
+    
     for k in k_rng:
         km = KMeans(n_clusters=k)
         km.fit(df_normalized[clusteringAttributesLst])
         sse_scaler.append(km.inertia_)
 
-    fig = sns.lineplot(
+    ax = sns.lineplot(
         data = sse_scaler,
         ax = [1]
         )
