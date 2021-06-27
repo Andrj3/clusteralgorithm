@@ -196,12 +196,12 @@ with clustering:
     recommendedNumberOfClusters = silhouetteScore_df.numberOfClusters[recommendedNumberOfClustersIndex]
   
     sns.set_style('darkgrid')
-    fig = sns.lineplot(
+    fig1 = sns.lineplot(
         data = silhouetteScore_df,
         x = 'numberOfClusters',
         y = 'SilhouetteScore'
         )
-    silcoeff_col.pyplot(fig)
+    silcoeff_col.pyplot(fig1)
 
 ### 3.2.2 - elbow-Method ### 
     k_rng = range(1,maxNumberOfClusters)
@@ -212,10 +212,10 @@ with clustering:
         sse_scaler.append(km.inertia_)
 
     sns.set_style('darkgrid')
-    fig = sns.lineplot(
-        data = sse_scaler,
+    fig2 = sns.lineplot(
+        data = sse_scaler
         )
-    elbow_col.pyplot(fig)
+    elbow_col.pyplot(fig2)
 
     chosenNumberOfClusters = st.slider('How many do you whish?', min_value=2, max_value=20, value= int(recommendedNumberOfClusters), step= 1)
     st.text('(we reccomend: ' + str(recommendedNumberOfClusters) + ' clusters)')
