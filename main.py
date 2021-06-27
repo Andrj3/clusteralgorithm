@@ -96,10 +96,11 @@ with cleaning:
     st.text('We prepare the dataset for the analysis')
     # df.dtypes we can show the dtypes
 
-#### 2.1 - rename ##### | This chapter is not used, becaus i was not able to make an interaction to adjust the atributes.
-    #st.subheader('2.1 - rename atributes')
-    #st.text('first we rename the features, so it is more confortable to proceed with easier names')
+#### 2.1 - rename ##### | This chapter is not used, becaus I was not able to make an interaction to adjust the atributes.
     if ownData == False:
+        st.subheader('2.1 - rename atributes')
+        st.text('first we rename the features, so it is more confortable to proceed with easier names')
+        
         df.rename(columns={
             'CustomerID' : 'ID',
             #'Age' : 'Age'
@@ -107,38 +108,46 @@ with cleaning:
             'Annual Income (k$)' : 'Income [k$]',
             'Spending Score (1-100)' : 'SpendingScore'
             }, inplace=True) #Rename Columns to have a more confort working
-    st.text('test1')
-    #attributeList_df = df.columns
-    #attributeList = df.columns.tolist()
-
-    #st.text('the new names for the attributes are:')
-    #st.write(attributeList)
+        
+    attributeList_df = df.columns
+    attributeList = df.columns.tolist()
+    
+    if ownData == False:
+        st.text('the new names for the attributes are:')
+        st.write(attributeList)
 
 #### 2.2 - drop useless atributes #####  This chapter is not used, becaus i was not able to make an interaction to adjust the atributes.
-    #st.subheader('2.2 - drop useless atributes')
-    #st.text('We drop the attributes we do not want to analyse, like ID')
+
     if ownData == False:
-        dropList = [
+        st.subheader('2.2 - Drop useless attributes')
+        st.text('We drop the attributes we do not want to analyse, like "ID" and "Gender"')
+        dropLst = [
             'ID',
             'Gender',
             #'Age',
             #'Annual Income (k$)',
             #'Spending Score (1-100)'
             ]
+        st.text('we now have a new List with attributes to use for our clustering alglorithm')
+        
+    else:
+        dropLst = df.select_dtypes(exclude='int64').columns.tolist()
 
-    #st.text('we now have a new List with attributes to use for our clustering alglorithm')
     clusteringAttributesLst = df.columns.tolist()
-    for i in dropList:
+    
+    for i in dropLst:
         clusteringAttributesLst.remove(i)
-    #clusteringAttributesLst
+    
+    st.text('These are the atributes we want to consider for clustering:')
+    st.write(clusteringAttributesLst)
 
-    st.text('we drop the unnecesairy columns from our dataset which results following:')
-    df.drop(dropList, axis= 1, inplace=True) #We now drop the features from the droplist and again show summary
-    st.write(df.head())
+    #st.text('we drop the unnecesairy columns from our dataset which results following:')
+    df.drop(dropLst, axis= 1, inplace=True) #We now drop the features from the droplist and again show summary
+    #st.write(df.head())
 
 ### return the dataset as a BackUp ###
 
-    fileNameCleaned = (prefix +'-1-cleaned.xlsx') #determine the fileName
+    #fileNameCleaned = (prefix +'-1-cleaned.xlsx') #determine the fileName
     #df.to_excel(os.path.join(datapath,fileNameCleaned), index = False) #export the file into Excel-Sheet
     #st.text('we cleaned the dataset and return it with the name: ' + '"' + fileNameCleaned +'"')
     df_cleaned = df.copy(deep=True)
