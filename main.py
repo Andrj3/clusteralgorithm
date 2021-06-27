@@ -211,53 +211,53 @@ with clustering:
         km.fit(df_normalized[clusteringAttributesLst])
         sse_scaler.append(km.inertia_)
 
-    sns.set_style('darkgrid')
-    fig2 = sns.lineplot(
-        data = sse_scaler
-        )
-    elbow_col.pyplot(fig2)
+    #sns.set_style('darkgrid')
+    #fig2 = sns.lineplot(
+    #    data = sse_scaler
+    #    )
+    #elbow_col.pyplot(fig2)
 
+### 3.2.2 - def reccomendation ### 
     chosenNumberOfClusters = st.slider('How many do you whish?', min_value=2, max_value=20, value= int(recommendedNumberOfClusters), step= 1)
     st.text('(we reccomend: ' + str(recommendedNumberOfClusters) + ' clusters)')
     numberOfClusters = chosenNumberOfClusters
 
 #### 3.3 - k-means clustering ####   
-    st.subheader('3.3 - k-means clusteing')
-    st.text('the dataset will now be clustered')
+    st.subheader('3.3 - k-means clustering')
+    st.text('The dataset will now be clustered')
 
     kmeans = KMeans(n_clusters=numberOfClusters).fit(df_normalized[clusteringAttributesLst])
-    st.write(kmeans.cluster_centers_)
+    #st.write(kmeans.cluster_centers_)
 
-    df_clustered = df_normalized[clusteringAttributesLst].copy(deep=True)
-    df_clustered['Cluster'] = kmeans.labels_
-    st.write(df_clustered)
+    #df_clustered = df_normalized[clusteringAttributesLst].copy(deep=True)
+    #df_clustered['Cluster'] = kmeans.labels_
+    df['Cluster'] = kmeans.labels_
+    st.write(df)
 
 #### 3.4 - return clustered dataset ####  
-    st.subheader('3.4 - return clustered dataset')
-    fileNameClustered = (prefix +'-2-clustered.xlsx') #determine the fileName
+    #st.subheader('3.4 - return clustered dataset')
+    #fileNameClustered = (prefix +'-2-clustered.xlsx') #determine the fileName
 
     #df_clustered.to_excel(os.path.join(datapath,fileNameClustered), index = False) #export the file into Excel-Sheet
-    clusteringAttributesLst
-    st.write(df_clustered.head())
-    dropLst = df_clustered.columns.tolist()
-    dropLst.remove('Cluster')
-    dropLst
+    #clusteringAttributesLst
+    st.write(df.head())
+
 
 #### 3.5 - create datafram with only cluster attribute ####   
-    st.subheader('3.5 - create clusteronly dataframe')
-    df_clusteronly =  df_clustered.copy(deep=True)
-    dropLst = df_clusteronly.columns.tolist()
-    dropLst.remove('Cluster')
-    df_clusteronly.drop(dropLst, axis= 1, inplace=True) #We now drop the features from the droplist and again show summary
-    df_clusteronly.head()
+    #st.subheader('3.5 - create clusteronly dataframe')
+    #df_clusteronly =  df_clustered.copy(deep=True)
+    #dropLst = df_clusteronly.columns.tolist()
+    #dropLst.remove('Cluster')
+    #df_clusteronly.drop(dropLst, axis= 1, inplace=True) #We now drop the features from the droplist and again show summary
+    #df_clusteronly.head()
 
-    fileNameClusterOnly = (prefix +'-3-clusteronly.xlsx') #determine the fileName
-    df_clusteronly.to_excel(os.path.join(datapath,fileNameClusterOnly), index = False) #export the file into Excel-Sheet
+    #fileNameClusterOnly = (prefix +'-3-clusteronly.xlsx') #determine the fileName
+    #df_clusteronly.to_excel(os.path.join(datapath,fileNameClusterOnly), index = False) #export the file into Excel-Sheet
 
 #### 3.6 - create final dataframe ####   
     st.subheader('3.6 - create final dataframe')
-    final_df = df_clusteronly.join(df_cleaned) ## final dataframe to work with, included Cluster Nr etc.
-    st.write(final_df)
+    #final_df = df_clusteronly.join(df_cleaned) ## final dataframe to work with, included Cluster Nr etc.
+    st.write(df)
 
 ##### 4 - vizualisation #####
 with visualization:
@@ -267,22 +267,12 @@ with visualization:
     st.subheader('4.1 - interactive gaphical representation')
 
     xset_col, yset_col = st.beta_columns(2)
-
-    color1 = 'blue'
-    color2 = 'green'
-    color3 = 'yellow'
-    color4 = 'red'
-    color5 = 'purple'
-    color6 = 'orange'
-    color7 = 'black'
-    color8 = 'grey'
-
     xLabelName = xset_col.selectbox(label = 'X axis', options = clusteringAttributesLst)
     yLabelName = yset_col.selectbox(label = 'Y axis', options = clusteringAttributesLst)
 
     sns.set_style('darkgrid')
     fig = sns.relplot(
-        data = final_df, 
+        data = df, 
         x = xLabelName, 
         y = yLabelName, 
         hue = 'Cluster',
