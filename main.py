@@ -31,7 +31,7 @@ import matplotlib.pyplot as plt
 from pandas.api.types import is_categorical
 from pathlib import Path
 
-import seaborn as sns; sns.set(style='whitegrid')
+import seaborn as sns; sns.set(style='darkgrid')
 from scipy.stats import norm
 
 from sklearn.cluster import KMeans
@@ -195,7 +195,6 @@ with clustering:
     recommendedNumberOfClustersIndex = silhouetteScore_df.idxmax(axis= 0, skipna=True)[1]
     recommendedNumberOfClusters = silhouetteScore_df.numberOfClusters[recommendedNumberOfClustersIndex]
   
-    #sns.set_style('darkgrid')
     #fig1 = sns.lineplot(
     #    data = silhouetteScore_df,
     #    x = 'numberOfClusters',
@@ -211,7 +210,6 @@ with clustering:
         km.fit(df_normalized[clusteringAttributesLst])
         sse_scaler.append(km.inertia_)
 
-    #sns.set_style('darkgrid')
     #fig2 = sns.lineplot(
     #    data = sse_scaler
     #    )
@@ -232,7 +230,7 @@ with clustering:
     #df_clustered = df_normalized[clusteringAttributesLst].copy(deep=True)
     #df_clustered['Cluster'] = kmeans.labels_
     df['Cluster'] = kmeans.labels_
-    st.write(df)
+    #st.write(df)
 
 #### 3.4 - return clustered dataset ####  
     #st.subheader('3.4 - return clustered dataset')
@@ -254,9 +252,9 @@ with clustering:
     #df_clusteronly.to_excel(os.path.join(datapath,fileNameClusterOnly), index = False) #export the file into Excel-Sheet
 
 #### 3.6 - create final dataframe ####   
-    st.subheader('3.6 - create final dataframe')
+    #st.subheader('3.6 - create final dataframe')
     #final_df = df_clusteronly.join(df_cleaned) ## final dataframe to work with, included Cluster Nr etc.
-    st.write(df)
+    #st.write(df)
 
 ##### 4 - vizualisation #####
 with visualization:
@@ -269,13 +267,11 @@ with visualization:
     xLabelName = xset_col.selectbox(label = 'X axis', options = clusteringAttributesLst)
     yLabelName = yset_col.selectbox(label = 'Y axis', options = clusteringAttributesLst)
 
-    sns.set_style('darkgrid')
     fig = sns.relplot(
         data = df, 
         x = xLabelName, 
         y = yLabelName, 
         hue = 'Cluster',
         palette = sns.color_palette("Set2", numberOfClusters),
-        #n_colors = numberOfClusters,
         )
     st.pyplot(fig)
