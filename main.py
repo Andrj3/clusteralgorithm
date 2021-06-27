@@ -105,7 +105,7 @@ with cleaning:
             'Annual Income (k$)' : 'Income [k$]',
             'Spending Score (1-100)' : 'SpendingScore'
             }, inplace=True) #Rename Columns to have a more confort working
-    st.test('test1')
+    st.text('test1')
     #attributeList_df = df.columns
     #attributeList = df.columns.tolist()
 
