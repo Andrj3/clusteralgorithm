@@ -14,7 +14,6 @@
 projectName = '60-MallCustomers'
 version = 'v21' #change from time to time
 prefix = (projectName + '-' + version)
-prefix
 
 ##### Imports #####
 
@@ -61,7 +60,7 @@ visualization = st.beta_container() ## 4
 ##### 0 - Introduction #####
 with introduction:
     st.title('Welcome to my Bachelor Thesis about Data Driven Customer Segmentation')
-    st.text('This projet makes data driven customer segmentation')
+    st.text('This App allows you to make data driven customer segmentation')
 
 ##### 1 - Dataset #####
 with dataset:
@@ -69,60 +68,63 @@ with dataset:
 
 ### 1.1 - Upload Datafile ###
     st.subheader('1.1 - Upload CSV-file')
-    st.text('if you want to analyse your own data, pls upload a CSV-File')
+    st.text('If you want to analyse your own data, pls upload a CSV-File, otherwise a default dataset is used for demonstration purposes.')
     df_uploaded = st.file_uploader('Upload CSV-File',type=['csv'])
 
-
     datapath = '01-Data'
-    df = pd.read_csv(os.path.join(datapath,'60-Mall_Customers.csv'), sep=',') # get the dataframe
+    df = pd.read_csv(os.path.join(datapath,'60-Mall_Customers.csv'), sep=',') # get the default dataframe
 
     csv_separator = st.text_input ('Please enter separator for CSV.File')
 
-    if df_uploaded is not None: df = pd.read_csv(df_uploaded, sep= csv_separator)
-    st.write(df.head())
-    st.text('We will first get an overview about the dataset')
+    if df_uploaded is not None:
+        ownData = True
+        df = pd.read_csv(df_uploaded, sep= csv_separator)
+    else: ownData = False
 
-    st.text('Here we can see the different features of the dataset:')
+    st.text('Here you can see the first 5 rows from the dataset. It is shown to give you a first impression.')
+    st.write(df.head())
+
+    st.text('Here we can see the different attributes of the dataset:')
     attributeList_df = df.columns
     attributeList = df.columns.tolist()
     st.write(attributeList)
-    st.text('if there are irrelevant atributes, pls remove them from the origin dataset and upload it again')
+    st.text('If there are irrelevant attributes, pls remove them from the origin dataset and upload it again')
  
 ##### 2 - cleaning #####
 with cleaning:
     st.header('2 - cleaning')
-    st.text('we prepare the dataset for the analysis')
+    st.text('We prepare the dataset for the analysis')
     # df.dtypes we can show the dtypes
 
-#### 2.1 - rename ##### 
-    st.subheader('2.1 - rename atributes')
-    st.text('first we rename the features, so it is more confortable to proceed with easier names')
-    df.rename(columns={
-        'CustomerID' : 'ID',
-        'Genre' : 'Gender',
-        #'Age',
-        'Annual Income (k$)' : 'Income [k$]',
-        'Spending Score (1-100)' : 'SpendingScore'
-        }, inplace=True)#Rename Columns to have a more confort working
+#### 2.1 - rename ##### | This chapter is not used, becaus i was not able to make an interaction to adjust the atributes.
+    #st.subheader('2.1 - rename atributes')
+    #st.text('first we rename the features, so it is more confortable to proceed with easier names')
+    if ownData = False:
+        df.rename(columns={
+            'Genre' : 'Gender',
+            'Annual Income (k$)' : 'Income [k$]',
+            'Spending Score (1-100)' : 'SpendingScore'
+            }, inplace=True)#Rename Columns to have a more confort working
     
-    attributeList_df = df.columns
-    attributeList = df.columns.tolist()
+    #attributeList_df = df.columns
+    #attributeList = df.columns.tolist()
 
-    st.text('the new names for the attributes are:')
-    st.write(attributeList)
+    #st.text('the new names for the attributes are:')
+    #st.write(attributeList)
 
-#### 2.2 - drop useless atributes ##### 
-    st.subheader('2.2 - drop useless atributes')
-    st.text('We drop the attributes we do not want to analyse, like ID')
-    dropList = [
-        'ID',
-        'Gender',
-        #'Age',
-        #'Annual Income (k$)',
-        #'Spending Score (1-100)'
-        ]
+#### 2.2 - drop useless atributes #####  This chapter is not used, becaus i was not able to make an interaction to adjust the atributes.
+    #st.subheader('2.2 - drop useless atributes')
+    #st.text('We drop the attributes we do not want to analyse, like ID')
+    if ownData = False:
+        dropList = [
+            'ID',
+            'Gender',
+            #'Age',
+            #'Annual Income (k$)',
+            #'Spending Score (1-100)'
+            ]
 
-    st.text('we now have a new List with attributes to use for our clustering alglorithm')
+    #st.text('we now have a new List with attributes to use for our clustering alglorithm')
     clusteringAttributesLst = df.columns.tolist()
     for i in dropList:
         clusteringAttributesLst.remove(i)
@@ -175,6 +177,7 @@ with clustering:
     silhouetteScore_df = pd.DataFrame(silhouetteScoreList, columns = ['numberOfClusters', 'SilhouetteScore'])
     silhouetteScore_df.sort_values(by='SilhouetteScore', ascending=False, inplace=True)
 
+
     recommendedNumberOfClustersIndex = silhouetteScore_df.idxmax(axis= 0, skipna=True)[1]
     recommendedNumberOfClusters = silhouetteScore_df.numberOfClusters[recommendedNumberOfClustersIndex]
     
@@ -197,7 +200,7 @@ with clustering:
     st.subheader('3.4 - return clustered dataset')
     fileNameClustered = (prefix +'-2-clustered.xlsx') #determine the fileName
 
-    df_clustered.to_excel(os.path.join(datapath,fileNameClustered), index = False) #export the file into Excel-Sheet
+    #df_clustered.to_excel(os.path.join(datapath,fileNameClustered), index = False) #export the file into Excel-Sheet
     clusteringAttributesLst
     st.write(df_clustered.head())
     dropLst = df_clustered.columns.tolist()
@@ -227,9 +230,7 @@ with visualization:
 ### 4.1 - final visualization ### 
     st.subheader('4.1 - interactive gaphical representation')
 
-
     xset_col, yset_col = st.beta_columns(2)
-
 
     color1 = 'blue'
     color2 = 'green'
