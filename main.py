@@ -71,22 +71,25 @@ with dataset:
 ### 1.1 - Upload Datafile ###
     st.subheader('1.1 - Upload CSV-file')
     st.text('If you want to analyse your own data, pls upload a CSV-File, \notherwise a default dataset is used for demonstration purposes.')
-   
-    ownData = False
     
-    df_uploaded = st.file_uploader('Upload CSV-File',type=['csv'])
-    df_uploaded = st.file_uploader('Upload excel-File',type=['xlsx'])
-
-    if df_uploaded is not None:
-        ownData = True
-        csv_separator = st.text_input ('Please enter separator for CSV.File')
-        df = pd.read_csv(df_uploaded, sep= csv_separator)
-    else: 
-        ownData = False
-
     datapath = '01-Data'
     df = pd.read_csv(os.path.join(datapath,'60-Mall_Customers.csv'), sep=',') # get the default dataframe
 
+    ownData = False
+    
+    df_uploadedCSV = st.file_uploader('Upload CSV-File',type=['csv'])
+    df_uploadedExcel = st.file_uploader('Upload excel-File',type=['xlsx'])
+
+    if df_uploadedCSV is not None:
+        ownData = True
+        csv_separator = st.text_input ('Please enter separator for CSV.File')
+        df = pd.read_csv(df_uploadedCSV, sep= csv_separator)
+    elif df_uploadedExcel is not None:
+        ownData = True
+        df = pd.read_excel(df_uploadedExcel)
+    else: 
+        ownData = False
+    
     st.text('Here you can see the first 5 rows from the dataset. \nIt is shown to give you a first impression.')
     st.write(df.head())
 
