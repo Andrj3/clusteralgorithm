@@ -24,6 +24,7 @@ import sys
 import streamlit as st
 import pandas as pd
 import numpy as np
+import plotly.express as px
 
 import matplotlib as mpl
 import matplotlib.image as mpimg
@@ -194,6 +195,7 @@ with clustering:
 
     recommendedNumberOfClustersIndex = silhouetteScore_df.idxmax(axis= 0, skipna=True)[1]
     recommendedNumberOfClusters = silhouetteScore_df.numberOfClusters[recommendedNumberOfClustersIndex]
+
 
     #fig, ax = plt.subplots()
 
