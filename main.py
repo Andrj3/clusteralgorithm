@@ -268,8 +268,8 @@ with visualization:
     st.subheader('4.1 - interactive gaphical representation')
 
     xset_col, yset_col = st.beta_columns(2)
-    xLabelName = xset_col.selectbox(label = 'X axis', options = clusteringAttributesLst)
-    yLabelName = yset_col.selectbox(label = 'Y axis', options = clusteringAttributesLst)
+    xLabelName = xset_col.selectbox(label = 'X axis', options = clusteringAttributesLst, value = clusteringAttributesLst[0])
+    yLabelName = yset_col.selectbox(label = 'Y axis', options = clusteringAttributesLst, value = clusteringAttributesLst[1])
 
     fig = sns.relplot(
         data = df, 
