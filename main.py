@@ -68,7 +68,7 @@ with dataset:
 
 ### 1.1 - Upload Datafile ###
     st.subheader('1.1 - Upload CSV-file')
-    st.text('If you want to analyse your own data, pls upload a CSV-File, otherwise a default dataset is used for demonstration purposes.')
+    st.text('If you want to analyse your own data, pls upload a CSV-File, \notherwise a default dataset is used for demonstration purposes.')
     df_uploaded = st.file_uploader('Upload CSV-File',type=['csv'])
 
     datapath = '01-Data'
@@ -81,14 +81,14 @@ with dataset:
         df = pd.read_csv(df_uploaded, sep= csv_separator)
     else: ownData = False
 
-    st.text('Here you can see the first 5 rows from the dataset. \n It is shown to give you a first impression.')
+    st.text('Here you can see the first 5 rows from the dataset. \nIt is shown to give you a first impression.')
     st.write(df.head())
 
     st.text('Here we can see the different attributes of the dataset:')
     attributeList_df = df.columns
     attributeList = df.columns.tolist()
     st.write(attributeList)
-    st.text('If there are irrelevant attributes, \n pls remove them from the origin dataset and upload it again')
+    st.text('If there are irrelevant attributes, \npls remove them from the origin dataset and upload it again')
  
 ##### 2 - cleaning #####
 with cleaning:
@@ -99,7 +99,7 @@ with cleaning:
 #### 2.1 - rename ##### | This chapter is not used, becaus I was not able to make an interaction to adjust the atributes.
     if ownData == False:
         st.subheader('2.1 - rename atributes')
-        st.text('first we rename the features, \n so it is more confortable to proceed with easier names')
+        st.text('first we rename the features, \nso it is more confortable to proceed with easier names')
         
         df.rename(columns={
             'CustomerID' : 'ID',
@@ -120,7 +120,7 @@ with cleaning:
 
     if ownData == False:
         st.subheader('2.2 - Drop useless attributes')
-        st.text('We drop the attributes we do not want to analyse,\n like "ID" and "Gender"')
+        st.text('We drop the attributes we do not want to analyse,\nlike "ID" and "Gender"')
         dropLst = [
             'ID',
             'Gender',
@@ -137,7 +137,7 @@ with cleaning:
     for i in dropLst:
         clusteringAttributesLst.remove(i)
     
-    st.text('These are the atributes we want to consider for clustering:')
+    st.text('These are the attributes we want to consider for clustering:')
     st.write(clusteringAttributesLst)
 
     #st.text('we drop the unnecesairy columns from our dataset which results following:')
@@ -275,3 +275,32 @@ with visualization:
         palette = sns.color_palette("Set2", numberOfClusters),
         )
     st.pyplot(fig)
+
+
+
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import streamlit as st
+    import time
+
+    fig, ax = plt.subplots()
+
+    max_x = 5
+    max_rand = 10
+
+    x = np.arange(0, max_x)
+    ax.set_ylim(0, max_rand)
+    line, = ax.plot(x, np.random.randint(0, max_rand, max_x))
+    the_plot = st.pyplot(plt)
+
+    def init():  # give a clean slate to start
+        line.set_ydata([np.nan] * len(x))
+
+    def animate(i):  # update the y values (every 1000ms)
+        line.set_ydata(np.random.randint(0, max_rand, max_x))
+        the_plot.pyplot(plt)
+
+    init()
+    for i in range(100):
+        animate(i)
+        time.sleep(0.1)
