@@ -194,13 +194,13 @@ with clustering:
     recommendedNumberOfClustersIndex = silhouetteScore_df.idxmax(axis= 0, skipna=True)[1]
     recommendedNumberOfClusters = silhouetteScore_df.numberOfClusters[recommendedNumberOfClustersIndex]
 
-    fig, ax = plt.subplots()
-    fig = sns.lineplot(
-        data = silhouetteScore_df,
-        x = 'numberOfClusters',
-        y = 'SilhouetteScore'
-        )
-    silcoeff_col.pyplot(fig)
+    #fig, ax = plt.subplots()
+    #fig = sns.lineplot(
+    #    data = silhouetteScore_df,
+    #    x = 'numberOfClusters',
+    #    y = 'SilhouetteScore'
+    #    )
+    #silcoeff_col.pyplot(fig)
 
 ### 3.2.2 - elbow-Method ### 
     k_rng = range(1,maxNumberOfClusters)
@@ -210,10 +210,10 @@ with clustering:
         km.fit(df_normalized[clusteringAttributesLst])
         sse_scaler.append(km.inertia_)
 
-    fig = sns.lineplot(
-        data = sse_scaler
-        )
-    elbow_col.pyplot(fig)
+    #fig = sns.lineplot(
+    #    data = sse_scaler
+    #    )
+    #elbow_col.pyplot(fig)
 
 ### 3.2.2 - def reccomendation ### 
     chosenNumberOfClusters = st.slider('How many do you whish?', min_value=2, max_value=20, value= int(recommendedNumberOfClusters), step= 1)
