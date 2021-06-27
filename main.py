@@ -99,7 +99,7 @@ with cleaning:
 #### 2.1 - rename ##### | This chapter is not used, becaus i was not able to make an interaction to adjust the atributes.
     #st.subheader('2.1 - rename atributes')
     #st.text('first we rename the features, so it is more confortable to proceed with easier names')
-    if ownData = False:
+    if ownData == False:
         df.rename(columns={
             'Genre' : 'Gender',
             'Annual Income (k$)' : 'Income [k$]',
@@ -115,7 +115,7 @@ with cleaning:
 #### 2.2 - drop useless atributes #####  This chapter is not used, becaus i was not able to make an interaction to adjust the atributes.
     #st.subheader('2.2 - drop useless atributes')
     #st.text('We drop the attributes we do not want to analyse, like ID')
-    if ownData = False:
+    if ownData == False:
         dropList = [
             'ID',
             'Gender',
