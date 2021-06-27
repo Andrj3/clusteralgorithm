@@ -81,14 +81,14 @@ with dataset:
         df = pd.read_csv(df_uploaded, sep= csv_separator)
     else: ownData = False
 
-    st.text('Here you can see the first 5 rows from the dataset. It is shown to give you a first impression.')
+    st.text('Here you can see the first 5 rows from the dataset. \n It is shown to give you a first impression.')
     st.write(df.head())
 
     st.text('Here we can see the different attributes of the dataset:')
     attributeList_df = df.columns
     attributeList = df.columns.tolist()
     st.write(attributeList)
-    st.text('If there are irrelevant attributes, pls remove them from the origin dataset and upload it again')
+    st.text('If there are irrelevant attributes, \n pls remove them from the origin dataset and upload it again')
  
 ##### 2 - cleaning #####
 with cleaning:
@@ -99,7 +99,7 @@ with cleaning:
 #### 2.1 - rename ##### | This chapter is not used, becaus I was not able to make an interaction to adjust the atributes.
     if ownData == False:
         st.subheader('2.1 - rename atributes')
-        st.text('first we rename the features, so it is more confortable to proceed with easier names')
+        st.text('first we rename the features, \n so it is more confortable to proceed with easier names')
         
         df.rename(columns={
             'CustomerID' : 'ID',
@@ -120,7 +120,7 @@ with cleaning:
 
     if ownData == False:
         st.subheader('2.2 - Drop useless attributes')
-        st.text('We drop the attributes we do not want to analyse, like "ID" and "Gender"')
+        st.text('We drop the attributes we do not want to analyse,\n like "ID" and "Gender"')
         dropLst = [
             'ID',
             'Gender',
@@ -128,7 +128,6 @@ with cleaning:
             #'Annual Income (k$)',
             #'Spending Score (1-100)'
             ]
-        st.text('we now have a new List with attributes to use for our clustering alglorithm')
         
     else:
         dropLst = df.select_dtypes(exclude='int64').columns.tolist()
@@ -163,16 +162,20 @@ with clustering:
     #st.write(df.head()) #show the dataframe
 
 #### 3.1 - normalize #### 
-    st.subheader('3.1 - Normalize Datapoints; Prepare the data for the alogrithm')
-    st.text('then we normalize the values:')
+    #st.subheader('3.1 - Normalize Datapoints; Prepare the data for the alogrithm')
+    #st.text('then we normalize the values:')
     df_normalized = (df_cleaned - df_cleaned.mean()) / df_cleaned.std()# Normalize the values
-    st.write(df_normalized.describe())
+    #st.write(df_normalized.describe())
 
-#### 3.2 - silhouette Score ####   
+#### 3.2 - suggestion ####   
     st.subheader('3.2 - suggestion for clustering: silhouetteScore')
     st.text('we analyse the dataset and reccomend a number of Clusters:')
- 
-    maxNumberOfClusters = 25 #this are just the numbers to consider from 1 to x, where x is the numberOfClusters
+
+
+    maxNumberOfClusters = 20 #this are just the numbers to consider from 1 to x, where x is the numberOfClusters
+    silcoeff_col, elbow_col = st.beta_columns(2)
+
+### 3.2.1 - silhouette Score ### 
     silhouetteScoreList = []
     numberOfClustersLst = list(range(2,maxNumberOfClusters+1))
 
@@ -185,13 +188,35 @@ with clustering:
             kmeans.labels_
         )
         silhouetteScoreList.append([n_cluster, silhouette_avg])
+    
     silhouetteScore_df = pd.DataFrame(silhouetteScoreList, columns = ['numberOfClusters', 'SilhouetteScore'])
     silhouetteScore_df.sort_values(by='SilhouetteScore', ascending=False, inplace=True)
 
-
     recommendedNumberOfClustersIndex = silhouetteScore_df.idxmax(axis= 0, skipna=True)[1]
     recommendedNumberOfClusters = silhouetteScore_df.numberOfClusters[recommendedNumberOfClustersIndex]
-    
+  
+    sns.set_style('darkgrid')
+    fig = sns.lineplot(
+        data = silhouetteScore_df,
+        x = 'NumberOfClusters',
+        y = 'SilhouetteScore'
+        )
+    silcoeff_col.pyplot(fig)
+
+### 3.2.2 - elbow-Method ### 
+    k_rng = range(1,maxNumberOfClusters)
+    sse_scaler  = []
+    for k in k_rng:
+        km = KMeans(n_clusters=k)
+        km.fit(df_normalized[clusteringAttributesLst])
+        sse_scaler.append(km.inertia_)
+
+    sns.set_style('darkgrid')
+    fig = sns.lineplot(
+        data = sse_scaler,
+        )
+    elbow_col.pyplot(fig)
+
     chosenNumberOfClusters = st.slider('How many do you whish?', min_value=2, max_value=20, value= int(recommendedNumberOfClusters), step= 1)
     st.text('(we reccomend: ' + str(recommendedNumberOfClusters) + ' clusters)')
     numberOfClusters = chosenNumberOfClusters
