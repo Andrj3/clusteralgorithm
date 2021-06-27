@@ -195,13 +195,13 @@ with clustering:
     recommendedNumberOfClustersIndex = silhouetteScore_df.idxmax(axis= 0, skipna=True)[1]
     recommendedNumberOfClusters = silhouetteScore_df.numberOfClusters[recommendedNumberOfClustersIndex]
   
-    sns.set_style('darkgrid')
-    fig1 = sns.lineplot(
-        data = silhouetteScore_df,
-        x = 'numberOfClusters',
-        y = 'SilhouetteScore'
-        )
-    silcoeff_col.pyplot(fig1)
+    #sns.set_style('darkgrid')
+    #fig1 = sns.lineplot(
+    #    data = silhouetteScore_df,
+    #    x = 'numberOfClusters',
+    #    y = 'SilhouetteScore'
+    #    )
+    #silcoeff_col.pyplot(fig1)
 
 ### 3.2.2 - elbow-Method ### 
     k_rng = range(1,maxNumberOfClusters)
