@@ -176,7 +176,7 @@ with clustering:
     silcoeff_col, elbow_col = st.beta_columns(2)
 
 ### 3.2.1 - silhouette Score ### 
-    silhouetteScoreList = []
+    silhouetteScoreLst = []
     numberOfClustersLst = list(range(2,maxNumberOfClusters+1))
 
     for n_cluster in numberOfClustersLst:
@@ -187,9 +187,9 @@ with clustering:
             df_normalized[clusteringAttributesLst], 
             kmeans.labels_
         )
-        silhouetteScoreList.append([n_cluster, silhouette_avg])
+        silhouetteScoreLst.append([n_cluster, silhouette_avg])
     
-    silhouetteScore_df = pd.DataFrame(silhouetteScoreList, columns = ['numberOfClusters', 'SilhouetteScore'])
+    silhouetteScore_df = pd.DataFrame(silhouetteScoreLst, columns = ['numberOfClusters', 'SilhouetteScore'])
     silhouetteScore_df.sort_values(by='SilhouetteScore', ascending=False, inplace=True)
 
     recommendedNumberOfClustersIndex = silhouetteScore_df.idxmax(axis= 0, skipna=True)[1]
@@ -198,7 +198,7 @@ with clustering:
     sns.set_style('darkgrid')
     fig = sns.lineplot(
         data = silhouetteScore_df,
-        x = 'NumberOfClusters',
+        x = 'numberOfClusters',
         y = 'SilhouetteScore'
         )
     silcoeff_col.pyplot(fig)
