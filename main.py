@@ -168,7 +168,7 @@ with clustering:
     #st.write(df_normalized.describe())
 
 #### 3.2 - suggestion ####   
-    st.subheader('3.2 - suggestion for clustering: silhouetteScore')
+    st.subheader('3.1 - suggestion for clustering: silhouetteScore')
     st.text('we analyse the dataset and reccomend a number of Clusters:')
 
 
@@ -195,13 +195,13 @@ with clustering:
     recommendedNumberOfClustersIndex = silhouetteScore_df.idxmax(axis= 0, skipna=True)[1]
     recommendedNumberOfClusters = silhouetteScore_df.numberOfClusters[recommendedNumberOfClustersIndex]
   
-    #sns.set_style('darkgrid')
-    #fig1 = sns.lineplot(
-    #    data = silhouetteScore_df,
-    #    x = 'numberOfClusters',
-    #    y = 'SilhouetteScore'
-    #    )
-    #silcoeff_col.pyplot(fig1)
+    sns.set_style('darkgrid')
+    fig1 = sns.lineplot(
+        data = silhouetteScore_df,
+        x = 'numberOfClusters',
+        y = 'SilhouetteScore'
+        )
+    silcoeff_col.pyplot(fig1)
 
 ### 3.2.2 - elbow-Method ### 
     k_rng = range(1,maxNumberOfClusters)
@@ -241,7 +241,6 @@ with clustering:
     #df_clustered.to_excel(os.path.join(datapath,fileNameClustered), index = False) #export the file into Excel-Sheet
     #clusteringAttributesLst
     st.write(df.head())
-
 
 #### 3.5 - create datafram with only cluster attribute ####   
     #st.subheader('3.5 - create clusteronly dataframe')
