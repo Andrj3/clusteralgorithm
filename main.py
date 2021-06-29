@@ -230,8 +230,8 @@ with clustering:
     #st.pyplot(fig)
 
 ### 3.2.2 - def reccomendation ### 
-    chosenNumberOfClusters = st.slider('How many do you whish?', min_value=2, max_value=20, value= int(recommendedNumberOfClusters), step= 1)
-    st.text('(we reccomend: ' + str(recommendedNumberOfClusters) + ' clusters)')
+    chosenNumberOfClusters = st.slider('How many clusters do you want to create?', min_value=2, max_value=20, value= int(recommendedNumberOfClusters), step= 1)
+    st.text('(I recommend: ' + str(recommendedNumberOfClusters) + ' clusters)')
     numberOfClusters = chosenNumberOfClusters
 
 #### 3.3 - k-means clustering ####   
