@@ -107,8 +107,8 @@ with cleaning:
 
 #### 2.1 - rename ##### | This chapter is not used, becaus I was not able to make an interaction to adjust the atributes.
     if ownData == False:
-        st.subheader('2.1 - rename atributes')
-        st.text('first we rename the features, \nso it is more confortable to proceed with easier names')
+        st.subheader('2.1 - rename attributes')
+        st.text('First we rename the features, \nso it is more confortable to proceed with easier names')
         
         df.rename(columns={
             'CustomerID' : 'ID',
@@ -122,8 +122,8 @@ with cleaning:
     attributeList = df.columns.tolist()
     
     if ownData == False:
-        st.text('the new names for the attributes are:')
-        st.write(attributeList)
+        #st.text('the new names for the attributes are:')
+        #st.write(attributeList)
 
 #### 2.2 - drop useless atributes #####  This chapter is not used, becaus i was not able to make an interaction to adjust the atributes.
 
@@ -202,7 +202,6 @@ with clustering:
 
     recommendedNumberOfClustersIndex = silhouetteScore_df.idxmax(axis= 0, skipna=True)[1]
     recommendedNumberOfClusters = silhouetteScore_df.numberOfClusters[recommendedNumberOfClustersIndex]
-
 
     #fig, ax = plt.subplots()
 
