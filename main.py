@@ -122,8 +122,8 @@ with cleaning:
     attributeList = df.columns.tolist()
     
     if ownData == False:
-        #st.text('the new names for the attributes are:')
-        #st.write(attributeList)
+        st.text('the new names for the attributes are:')
+        st.write(attributeList)
 
 #### 2.2 - drop useless atributes #####  This chapter is not used, becaus i was not able to make an interaction to adjust the atributes.
 
@@ -178,7 +178,7 @@ with clustering:
 
 #### 3.2 - suggestion ####   
     st.subheader('3.1 - suggestion for clustering: silhouetteScore')
-    st.text('we analyse the dataset and reccomend a number of Clusters:')
+    st.text('We analyse the dataset and recommend a number of Clusters based on the silhouette Score.')
 
     maxNumberOfClusters = 20 #this are just the numbers to consider from 1 to x, where x is the numberOfClusters
     silcoeff_col, elbow_col = st.beta_columns(2)
